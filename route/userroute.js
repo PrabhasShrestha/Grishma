@@ -1,10 +1,7 @@
-const route = require('express').Router();
+const router = require('express').Router();
+const userController = require('../controller/testController');
 
-const userController = require('../controller/userController')
-
-route.get('/register', userController.createUsers)
-route.get('/login', userController.LoginUsers)
-route.get('/password', userController.changepassword)
-route.get('/View', userController.Viewprofile)
-
-module.exports = route;
+router.post('/register', userController.createUsers);
+router.post('/login', userController.loginUser);
+// Removed unused routes (add back if needed)
+module.exports = router;
