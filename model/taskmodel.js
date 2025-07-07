@@ -1,4 +1,3 @@
-// taskmodel.js
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/database');
 const User = require('./usermodel');
@@ -35,10 +34,6 @@ const Task = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        assigned_to: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
     },
     {
         tableName: 'tasks',
@@ -46,8 +41,6 @@ const Task = sequelize.define(
     }
 );
 
-// Define associations
 Task.belongsTo(User, { foreignKey: 'created_by' });
-Task.belongsTo(User, { foreignKey: 'assigned_to' });
 
 module.exports = Task;

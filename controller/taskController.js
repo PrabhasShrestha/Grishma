@@ -3,7 +3,7 @@ const User = require('../model/usermodel');
 
 const createTask = async (req, res) => {
     try {
-        const { title, description, priority, due_date, assigned_to } = req.body;
+        const { title, description, priority, due_date } = req.body;
         const userId = req.user.id;
 
         if (!title) {
@@ -16,8 +16,7 @@ const createTask = async (req, res) => {
             priority: priority || 'Medium',
             due_date,
             status: 'To-Do',
-            created_by: userId,
-            assigned_to: assigned_to || userId // Default to creator if not specified
+            created_by: userId
         });
 
         res.status(201).json({ success: true, message: "task created", task: newTask });
@@ -43,7 +42,7 @@ const updateTask = async (req, res) => {
     const taskId = req.params.id;
     try {
         const userId = req.user.id;
-        const { title, description, priority, status, due_date, assigned_to } = req.body;
+        const { title, description, priority, status, due_date } = req.body;
 
         const task = await Task.findOne({ where: { id: taskId, created_by: userId } });
         if (!task) {
@@ -51,7 +50,7 @@ const updateTask = async (req, res) => {
         }
 
         await Task.update(
-            { title, description, priority, status, due_date, assigned_to },
+            { title, description, priority, status, due_date },
             { where: { id: taskId } }
         );
 
